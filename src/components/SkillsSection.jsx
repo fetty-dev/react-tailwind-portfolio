@@ -77,9 +77,21 @@ export const SkillsSection = () => {
         
         const data = await calculateSkillLevels();
         
+        // List of auto-generated languages to exclude
+        const excludedLanguages = [
+          'Makefile', 'Dockerfile', 'YAML', 'YML', 'JSON', 'XML', 'HTML',
+          'CSS', 'SCSS', 'Less', 'Stylus', 'Shell', 'Bash', 'PowerShell',
+          'Batchfile', 'INI', 'TOML', 'Config', 'Ignore', 'Gitignore',
+          'Markdown', 'Text', 'Log', 'CSV', 'SQL', 'Lock', 'Lockfile'
+        ];
+        
         // Transform GitHub data to our skills format
         const githubSkills = data.skills
-          .filter(skill => skill.percent >= 1) // Only show languages with 1%+ usage
+          .filter(skill => 
+            skill.percent >= 1 && // Only show languages with 1%+ usage
+            !excludedLanguages.includes(skill.language) && // Exclude auto-generated
+            languageCategories[skill.language] // Only include languages we categorize
+          )
           .map(skill => ({
             name: skill.language,
             level: skill.level,
