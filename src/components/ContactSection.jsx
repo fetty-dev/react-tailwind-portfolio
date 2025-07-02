@@ -1,9 +1,9 @@
 import {
-  Linkedin,
   Mail,
   MapPin,
   Phone,
   Send,
+  Linkedin,
   Twitter,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -27,11 +27,12 @@ export const ContactSection = () => {
         if (!value.trim()) return 'Name is required';
         if (value.trim().length < 2) return 'Name must be at least 2 characters';
         return '';
-      case 'email':
+      case 'email': {
         if (!value.trim()) return 'Email is required';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) return 'Please enter a valid email address';
         return '';
+      }
       case 'message':
         if (!value.trim()) return 'Message is required';
         if (value.trim().length < 10) return 'Message must be at least 10 characters';
@@ -94,7 +95,6 @@ export const ContactSection = () => {
       setFormData({ name: '', email: '', message: '' });
       setErrors({});
       setTouched({});
-      e.target.reset();
     }, 1500);
   };
   return (

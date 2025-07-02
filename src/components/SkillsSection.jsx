@@ -45,10 +45,7 @@ const languageCategories = {
   'Haskell': 'languages',
   'Lua': 'languages',
   
-  // Mobile
-  'Swift': 'mobile',
-  'Kotlin': 'mobile',
-  'Dart': 'mobile',
+  // Mobile (languages already categorized above, no duplicates needed)
   'Objective-C': 'mobile',
   
   // Other

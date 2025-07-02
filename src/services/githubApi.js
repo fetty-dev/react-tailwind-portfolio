@@ -1,8 +1,10 @@
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 const BASE_URL = 'https://api.github.com';
 
-console.log('GitHub Token loaded:', GITHUB_TOKEN ? 'Yes' : 'No');
-console.log('Token length:', GITHUB_TOKEN ? GITHUB_TOKEN.length : 0);
+// Token validation for development
+if (import.meta.env.DEV) {
+  console.log('GitHub Token loaded:', GITHUB_TOKEN ? 'Yes' : 'No');
+}
 
 class GitHubApiError extends Error {
   constructor(message, status) {
@@ -17,7 +19,9 @@ const fetchWithAuth = async (url) => {
     throw new GitHubApiError('GitHub token not found in environment variables', 401);
   }
 
-  console.log('Fetching:', url);
+  if (import.meta.env.DEV) {
+    console.log('Fetching:', url);
+  }
   
   const response = await fetch(url, {
     headers: {
@@ -26,7 +30,9 @@ const fetchWithAuth = async (url) => {
     },
   });
 
-  console.log('Response status:', response.status);
+  if (import.meta.env.DEV) {
+    console.log('Response status:', response.status);
+  }
   
   if (!response.ok) {
     const errorText = await response.text();

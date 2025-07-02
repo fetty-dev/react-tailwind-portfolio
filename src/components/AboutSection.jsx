@@ -33,13 +33,13 @@ export const AboutSection = () => {
                 Get In Touch
               </a>
 
-              <a
-                href=""
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              <button
+                disabled
+                className="px-6 py-2 rounded-full border border-primary/50 text-primary/50 cursor-not-allowed transition-colors duration-300"
                 aria-label="Download my CV (coming soon)"
               >
                 Download CV
-              </a>
+              </button>
             </div>
           </div>
 
