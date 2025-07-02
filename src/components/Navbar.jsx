@@ -49,7 +49,7 @@ export const Navbar = () => {
   return (
     <nav
       className={cn(
-        "fixed w-full z-40 transition-all duration-300",
+        "fixed w-full z-30 transition-all duration-300",
         isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
       )}
     >
@@ -95,7 +95,7 @@ export const Navbar = () => {
           
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
-            className="p-2 text-foreground z-50"
+            className="p-2 text-foreground z-[9999] relative"
             aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -105,7 +105,7 @@ export const Navbar = () => {
         {/* Mobile menu backdrop */}
         <div
           className={cn(
-            "fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-all duration-300 md:hidden",
+        "fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -117,7 +117,7 @@ export const Navbar = () => {
         {/* Mobile menu drawer */}
         <div
           className={cn(
-            "fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background border-l border-border z-50",
+            "fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background border-l border-border z-[9999]",
             "transition-all duration-300 ease-in-out md:hidden",
             "flex flex-col shadow-xl",
             isMenuOpen
