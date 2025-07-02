@@ -170,27 +170,35 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    /* Light theme - warm, sunny colors */
+    --background: 45 100% 97%; /* Warm cream background */
+    --foreground: 20 14% 15%; /* Dark brown text */
 
-    --card: 0 0% 100%;
+    --card: 35 100% 96%; /* Light warm card */
+    --secondary: 40 100% 92%; /* Warm secondary */
 
-    --primary: 250 47% 60%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 35 84% 55%; /* Warm orange primary */
+    --primary-foreground: 20 14% 15%; /* Dark text on primary */
 
-    --border: 214 32% 91%;
+    --border: 35 50% 85%; /* Warm border */
+    --muted: 40 60% 85%; /* Warm muted */
+    --muted-foreground: 20 14% 45%; /* Muted text */
   }
 
   .dark {
-    --background: 222 47% 4%;
-    --foreground: 213 31% 91%;
+    /* Dark theme - cool, cosmic colors */
+    --background: 222 47% 4%; /* Deep space blue */
+    --foreground: 213 31% 91%; /* Light cosmic text */
 
-    --card: 222 47% 8%;
+    --card: 222 47% 8%; /* Dark cosmic card */
+    --secondary: 217 33% 12%; /* Dark secondary */
 
-    --primary: 250 65% 65%;
-    --primary-foreground: 213 31% 91%;
+    --primary: 250 65% 65%; /* Cosmic purple */
+    --primary-foreground: 213 31% 91%; /* Light text on primary */
 
-    --border: 217 33% 20%;
+    --border: 217 33% 20%; /* Dark cosmic border */
+    --muted: 217 33% 15%; /* Dark muted */
+    --muted-foreground: 213 31% 60%; /* Muted cosmic text */
   }
 
   * {
@@ -239,10 +247,10 @@
 }
 
 @utility gradient-border {
-  @apply relative rounded-md;
-  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
-  background-clip: padding-box;
-  border: 1px solid transparent;
+  @apply relative rounded-md border border-border;
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @utility cosmic-button {

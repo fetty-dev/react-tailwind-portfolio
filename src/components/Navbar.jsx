@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, Monitor } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -13,7 +13,7 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [themeMode, setThemeMode] = useState("auto");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,28 +24,55 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    }
-  }, []);
+  // Auto theme detection - same logic as ThemeToggle
+  const getAutoTheme = () => {
+    const hour = new Date().getHours();
+    const isNightTime = hour < 7 || hour >= 19;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return isNightTime || systemPrefersDark;
+  };
 
-  const toggleTheme = () => {
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    } else {
+  const applyTheme = (isDark) => {
+    if (isDark) {
       document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setIsDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   };
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "auto";
+    setThemeMode(storedTheme);
+  }, []);
+
+  const cycleTheme = () => {
+    let nextMode;
+    let nextIsDark;
+
+    if (themeMode === "light") {
+      nextMode = "dark";
+      nextIsDark = true;
+    } else if (themeMode === "dark") {
+      nextMode = "auto";
+      nextIsDark = getAutoTheme();
+    } else {
+      nextMode = "light";
+      nextIsDark = false;
+    }
+
+    setThemeMode(nextMode);
+    localStorage.setItem("theme", nextMode);
+    applyTheme(nextIsDark);
+  };
+
+  // Get appropriate icon
+  const getIcon = () => {
+    if (themeMode === "light") return Sun;
+    if (themeMode === "dark") return Moon;
+    return Monitor;
+  };
+
+  const ThemeIcon = getIcon();
   return (
     <nav
       className={cn(
@@ -82,15 +109,16 @@ export const Navbar = () => {
         {/* mobile nav */}
         <div className="md:hidden flex items-center space-x-2">
           <button
-            onClick={toggleTheme}
+            onClick={cycleTheme}
             className="p-2 rounded-full hover:bg-secondary/50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={`Current: ${themeMode} mode`}
           >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5 text-yellow-300" />
-            ) : (
-              <Moon className="h-5 w-5 text-blue-900" />
-            )}
+            <ThemeIcon className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              themeMode === "light" && "text-yellow-500",
+              themeMode === "dark" && "text-blue-400", 
+              themeMode === "auto" && "text-gray-500"
+            )} />
           </button>
           
           <button
