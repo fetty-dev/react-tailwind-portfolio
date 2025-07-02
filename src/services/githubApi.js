@@ -1,6 +1,9 @@
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 const BASE_URL = 'https://api.github.com';
 
+console.log('GitHub Token loaded:', GITHUB_TOKEN ? 'Yes' : 'No');
+console.log('Token length:', GITHUB_TOKEN ? GITHUB_TOKEN.length : 0);
+
 class GitHubApiError extends Error {
   constructor(message, status) {
     super(message);
@@ -10,6 +13,12 @@ class GitHubApiError extends Error {
 }
 
 const fetchWithAuth = async (url) => {
+  if (!GITHUB_TOKEN) {
+    throw new GitHubApiError('GitHub token not found in environment variables', 401);
+  }
+
+  console.log('Fetching:', url);
+  
   const response = await fetch(url, {
     headers: {
       'Authorization': `Bearer ${GITHUB_TOKEN}`,
@@ -17,9 +26,13 @@ const fetchWithAuth = async (url) => {
     },
   });
 
+  console.log('Response status:', response.status);
+  
   if (!response.ok) {
+    const errorText = await response.text();
+    console.error('GitHub API Error:', errorText);
     throw new GitHubApiError(
-      `GitHub API error: ${response.statusText}`,
+      `GitHub API error: ${response.status} ${response.statusText}`,
       response.status
     );
   }
