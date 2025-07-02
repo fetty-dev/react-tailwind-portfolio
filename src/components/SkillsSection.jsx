@@ -3,28 +3,27 @@ import { cn } from "@/lib/utils";
 
 const skills = [
   // Frontend
-  { name: "HTML/CSS", level: 0, category: "frontend" },
-  { name: "JavaScript", level: 0, category: "frontend" },
-  { name: "React", level: 0, category: "frontend" },
-  { name: "TypeScript", level: 0, category: "frontend" },
-  { name: "Tailwind CSS", level: 0, category: "frontend" },
-  { name: "Next.js", level: 0, category: "frontend" },
+  { name: "HTML", level: 90, category: "frontend" },
+  { name: "CSS", level: 85, category: "frontend" },
+  { name: "JavaScript", level: 80, category: "frontend" },
+  { name: "React", level: 85, category: "frontend" },
+  { name: "TypeScript", level: 75, category: "frontend" },
+  { name: "TailwindCSS", level: 80, category: "frontend" },
 
   // Backend
-  { name: "Node.js", level: 0, category: "backend" },
-  { name: "Express", level: 0, category: "backend" },
-  { name: "MongoDB", level: 0, category: "backend" },
-  { name: "PostgreSQL", level: 0, category: "backend" },
-  { name: "GraphQL", level: 0, category: "backend" },
+  { name: "Node.js", level: 70, category: "backend" },
+  { name: "MongoDB", level: 65, category: "backend" },
 
-  // Tools
-  { name: "Git/GitHub", level: 0, category: "tools" },
-  { name: "Docker", level: 0, category: "tools" },
-  { name: "Figma", level: 0, category: "tools" },
-  { name: "VS Code", level: 0, category: "tools" },
+  // Languages
+  { name: "Python", level: 75, category: "languages" },
+  { name: "C++", level: 60, category: "languages" },
+
+  // Mobile
+  { name: "Flutter", level: 70, category: "mobile" },
+  { name: "Swift", level: 65, category: "mobile" },
 ];
 
-const categories = ["all", "frontend", "backend", "tools"];
+const categories = ["all", "frontend", "backend", "languages", "mobile"];
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
