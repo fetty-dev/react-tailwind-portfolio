@@ -93,29 +93,26 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4"> Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="#" target="_blank">
+                <a href="#" target="_blank" rel="noopener noreferrer">
                   <Linkedin />
                 </a>
-                <a href="#" target="_blank">
+                <a href="#" target="_blank" rel="noopener noreferrer">
                   <Twitter />
                 </a>
-                <a href="#" target="_blank">
+                <a href="#" target="_blank" rel="noopener noreferrer">
                   <Instagram />
                 </a>
-                <a href="#" target="_blank">
+                <a href="#" target="_blank" rel="noopener noreferrer">
                   <Twitch />
                 </a>
               </div>
             </div>
           </div>
 
-          <div
-            className="bg-card p-8 rounded-lg shadow-xs"
-            onSubmit={handleSubmit}
-          >
+          <div className="bg-card p-8 rounded-lg shadow-xs">
             <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"

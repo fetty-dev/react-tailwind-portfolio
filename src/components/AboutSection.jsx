@@ -58,7 +58,7 @@ export const AboutSection = () => {
                   <User className="h-6 w-6 text-primary" />
                 </div>
                 <div className="text-left">
-                  <h4 className="font-semibold text-lg">React & Modern Font-end</h4>
+                  <h4 className="font-semibold text-lg">React & Modern Frontend</h4>
                   <p className="text-muted-foreground">
                     Developing responsive, intuitive web experiences with React and cutting-edge tools.
                   </p>
