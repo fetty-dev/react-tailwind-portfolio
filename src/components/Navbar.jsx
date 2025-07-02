@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Menu, X, Moon, Sun, Monitor } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/hooks/use-theme";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -13,7 +14,7 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [themeMode, setThemeMode] = useState("auto");
+  const { themeMode, cycleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,47 +24,6 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Auto theme detection - same logic as ThemeToggle
-  const getAutoTheme = () => {
-    const hour = new Date().getHours();
-    const isNightTime = hour < 7 || hour >= 19;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return isNightTime || systemPrefersDark;
-  };
-
-  const applyTheme = (isDark) => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "auto";
-    setThemeMode(storedTheme);
-  }, []);
-
-  const cycleTheme = () => {
-    let nextMode;
-    let nextIsDark;
-
-    if (themeMode === "light") {
-      nextMode = "dark";
-      nextIsDark = true;
-    } else if (themeMode === "dark") {
-      nextMode = "auto";
-      nextIsDark = getAutoTheme();
-    } else {
-      nextMode = "light";
-      nextIsDark = false;
-    }
-
-    setThemeMode(nextMode);
-    localStorage.setItem("theme", nextMode);
-    applyTheme(nextIsDark);
-  };
 
   // Get appropriate icon
   const getIcon = () => {
