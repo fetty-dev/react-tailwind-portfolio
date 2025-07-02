@@ -51,6 +51,14 @@
   --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
   --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
   --animate-meteor: meteor 5s linear infinite;
+  
+  /* Light theme animations - sun, clouds, hills, wind */
+  --animate-sun-glow: sun-glow 4s ease-in-out infinite;
+  --animate-sun-rotate: sun-rotate 20s linear infinite;
+  --animate-cloud-drift: cloud-drift 1s linear infinite;
+  --animate-hill-sway: hill-sway 8s ease-in-out infinite;
+  --animate-hill-sway-slow: hill-sway-slow 12s ease-in-out infinite;
+  --animate-wind-ripple: wind-ripple 1s ease-in-out infinite;
 
   @keyframes float {
     0%,
@@ -91,6 +99,71 @@
     100% {
       transform: rotate(215deg) translateX(-500px);
       opacity: 0;
+    }
+  }
+
+  /* Light theme keyframes */
+  @keyframes sun-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px 5px rgba(255, 193, 7, 0.6),
+                  0 0 40px 10px rgba(255, 193, 7, 0.4),
+                  0 0 60px 15px rgba(255, 193, 7, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 30px 8px rgba(255, 193, 7, 0.8),
+                  0 0 60px 15px rgba(255, 193, 7, 0.6),
+                  0 0 90px 20px rgba(255, 193, 7, 0.3);
+    }
+  }
+
+  @keyframes sun-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes cloud-drift {
+    from {
+      transform: translateX(-100px);
+    }
+    to {
+      transform: translateX(calc(100vw + 100px));
+    }
+  }
+
+  @keyframes hill-sway {
+    0%, 100% {
+      transform: translateX(0) scaleX(1);
+    }
+    50% {
+      transform: translateX(2px) scaleX(1.005);
+    }
+  }
+
+  @keyframes hill-sway-slow {
+    0%, 100% {
+      transform: translateX(0) scaleX(1);
+    }
+    50% {
+      transform: translateX(-1px) scaleX(1.002);
+    }
+  }
+
+  @keyframes wind-ripple {
+    0% {
+      opacity: 0;
+      transform: scaleX(0.8) scaleY(0.5);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scaleX(1.2) scaleY(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scaleX(1.4) scaleY(0.5);
     }
   }
 }
@@ -190,6 +263,77 @@
   border-radius: 9999px;
   position: absolute;
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Light theme utilities */
+@utility sun {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd700 0%, #ffb347 70%, #ff8c00 100%);
+}
+
+@utility sun-rays {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  background: conic-gradient(
+    transparent 0deg,
+    rgba(255, 215, 0, 0.1) 10deg,
+    transparent 20deg,
+    rgba(255, 215, 0, 0.1) 30deg,
+    transparent 40deg,
+    rgba(255, 215, 0, 0.1) 50deg,
+    transparent 60deg,
+    rgba(255, 215, 0, 0.1) 70deg,
+    transparent 80deg,
+    rgba(255, 215, 0, 0.1) 90deg,
+    transparent 100deg,
+    rgba(255, 215, 0, 0.1) 110deg,
+    transparent 120deg
+  );
+}
+
+@utility cloud {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.8;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cloud pseudo-elements need to be in regular CSS, not utilities */
+.cloud::before {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  top: -50%;
+  left: 20%;
+  width: 50%;
+  height: 80%;
+}
+
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  top: -30%;
+  right: 15%;
+  width: 60%;
+  height: 60%;
+}
+
+@utility wind-ripple {
+  position: absolute;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 #root {
