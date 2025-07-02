@@ -31,8 +31,9 @@ export const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <a
-          className="text-xl font-bold text-primary flex items-center"
+          className="text-xl font-bold text-primary flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
           href="#hero"
+          aria-label="Go to home section"
         >
           <span className="relative z-10">
             <span className="text-glow text-foreground"> Fetty's </span>{" "}
@@ -46,7 +47,8 @@ export const Navbar = () => {
             <a
               key={key}
               href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors duration-300"
+              className="text-foreground/80 hover:text-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1 py-1"
+              aria-label={`Go to ${item.name.toLowerCase()} section`}
             >
               {item.name}
             </a>
@@ -63,22 +65,50 @@ export const Navbar = () => {
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
         </button>
 
+        {/* Mobile menu backdrop */}
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
-            "transition-all duration-300 md:hidden",
+            "fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
           )}
+          onClick={() => setIsMenuOpen(false)}
+          aria-hidden="true"
+        />
+
+        {/* Mobile menu drawer */}
+        <div
+          className={cn(
+            "fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background border-l border-border z-50",
+            "transition-all duration-300 ease-in-out md:hidden",
+            "flex flex-col shadow-xl",
+            isMenuOpen
+              ? "translate-x-0"
+              : "translate-x-full"
+          )}
         >
-          <div className="flex flex-col space-y-8 text-xl">
+          {/* Drawer header */}
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <span className="text-lg font-semibold text-primary">Menu</span>
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 rounded-full hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-label="Close menu"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Navigation links */}
+          <div className="flex flex-col p-6 space-y-6">
             {navItems.map((item, key) => (
               <a
                 key={key}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                className="text-lg text-foreground/80 hover:text-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-2 py-2 border-b border-border/30 last:border-b-0"
                 onClick={() => setIsMenuOpen(false)}
+                aria-label={`Go to ${item.name.toLowerCase()} section`}
               >
                 {item.name}
               </a>

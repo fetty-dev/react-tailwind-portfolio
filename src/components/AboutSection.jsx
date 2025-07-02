@@ -24,14 +24,19 @@ export const AboutSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-              <a href="#contact" className="cosmic-button">
+              <a 
+                href="#contact" 
+                className="cosmic-button focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label="Go to contact section"
+              >
                 {" "}
                 Get In Touch
               </a>
 
               <a
                 href=""
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
+                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label="Download my CV (coming soon)"
               >
                 Download CV
               </a>

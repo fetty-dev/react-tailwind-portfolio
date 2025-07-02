@@ -137,12 +137,35 @@ export const SkillsSection = () => {
         )}
         
         {loading && (
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 text-muted-foreground">
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
-              Loading skills from GitHub...
+          <>
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 text-muted-foreground">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
+                Loading skills from GitHub...
+              </div>
             </div>
-          </div>
+
+            {/* Skeleton loading cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-card p-6 rounded-lg shadow-xs animate-pulse"
+                >
+                  <div className="text-left mb-4">
+                    <div className="h-6 bg-secondary/50 rounded w-24 mb-1"></div>
+                  </div>
+                  <div className="w-full bg-secondary/30 h-2 rounded-full overflow-hidden mb-2">
+                    <div className="bg-gradient-to-r from-primary/40 to-primary/60 h-2 rounded-full w-3/4"></div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="h-4 bg-secondary/50 rounded w-12"></div>
+                    <div className="h-6 bg-secondary/50 rounded-full w-6"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
         
         {error && (
@@ -173,35 +196,44 @@ export const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSkills.map((skill, key) => (
-            <div
-              key={key}
-              className="bg-card p-6 rounded-lg shadow-xs card-hover"
-            >
-              <div className="text-left mb-4">
-                <h3 className="font-semibold text-lg"> {skill.name}</h3>
-              </div>
-              <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
-                <div
-                  className="bg-primary h-2 rounded-full origin-left animate-[grow_1.5s_ease-out]"
-                  style={{ width: skill.percent + "%" }}
-                />
-              </div>
+        {!loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredSkills.map((skill, key) => (
+              <div
+                key={key}
+                className="bg-card p-6 rounded-lg shadow-xs card-hover"
+              >
+                <div className="text-left mb-4">
+                  <h3 className="font-semibold text-lg"> {skill.name}</h3>
+                </div>
+                <div className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
+                  <div
+                    className={cn(
+                      "h-2 rounded-full origin-left animate-[grow_1.5s_ease-out]",
+                      skill.percent >= 50 ? "bg-gradient-to-r from-blue-500 to-blue-600" :
+                      skill.percent >= 30 ? "bg-gradient-to-r from-purple-500 to-purple-600" :
+                      skill.percent >= 15 ? "bg-gradient-to-r from-orange-500 to-orange-600" :
+                      skill.percent >= 5 ? "bg-gradient-to-r from-yellow-500 to-yellow-600" :
+                      "bg-gradient-to-r from-green-500 to-green-600"
+                    )}
+                    style={{ width: skill.percent + "%" }}
+                  />
+                </div>
 
-              <div className="text-right mt-1">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">
-                    {skill.percent}%
-                  </span>
-                  <span className="text-lg" title={`Level ${skill.level}/5`}>
-                    {skill.emoji}
-                  </span>
+                <div className="text-right mt-1">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      {skill.percent}%
+                    </span>
+                    <span className="text-lg" title={`Level ${skill.level}/5`}>
+                      {skill.emoji}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
